@@ -28,11 +28,13 @@ jobs:
         echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
         echo "Version is $VERSION"
 
-    - name: Build Docker image
+    - name: Build Docker image with Buildx
       run: |
-        docker build \
+        docker buildx build \
           --build-arg VERSION=${{ env.RELEASE_VERSION }} \
-          -t ${{ secrets.DOCKER_USERNAME }}/weather-api:${{ env.RELEASE_VERSION }} .
+          -t ${{ secrets.DOCKER_USERNAME }}/weather-api:${{ env.RELEASE_VERSION }} \
+          --load \
+          .
 
     - name: Push Docker image
       run: |
