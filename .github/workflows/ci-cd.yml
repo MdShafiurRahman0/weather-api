@@ -30,11 +30,10 @@ jobs:
 
     - name: Build Docker image with Buildx
       run: |
-        docker buildx build \
+        docker buildx build . \
           --build-arg VERSION=${{ env.RELEASE_VERSION }} \
           -t ${{ secrets.DOCKER_USERNAME }}/weather-api:${{ env.RELEASE_VERSION }} \
-          --load \
-          .
+          --load
 
     - name: Push Docker image
       run: |
